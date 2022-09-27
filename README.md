@@ -1,2 +1,2 @@
-# Core-HTML
+# HTML
 Manupulação de HTML via PHP
