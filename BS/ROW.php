@@ -10,9 +10,7 @@ class ROW extends BS
   {
     $this->finalElement = new DIV('row');
 
-    if ($append !== null) {
-      $this->finalElement->append($append);
-    }
+    $this->append($append);
   }
 
   public function getTag()

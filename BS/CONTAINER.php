@@ -11,9 +11,7 @@ class CONTAINER extends BS
   {
     $this->finalElement = new DIV('container');
 
-    if ($append !== null) {
-      $this->finalElement->append($append);
-    }
+    $this->append($append);
   }
 
   public function getTag()

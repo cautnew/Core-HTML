@@ -27,6 +27,21 @@ class BS
     return $this->getFinalElement();
   }
 
+  public function append($append = null): self
+  {
+    if ($append === null) {
+      return $this;
+    }
+
+    if (gettype($append) == 'array') {
+      $this->getTag()->appendList($append);
+    } else {
+      $this->getTag()->append($append);
+    }
+
+    return $this;
+  }
+
   public function getFinalElement()
   {
     return $this->getTag();
