@@ -27,6 +27,11 @@ class BS
     return $this->getFinalElement();
   }
 
+  public function __toString()
+  {
+    return $this->getFinalElement()->getHtml();
+  }
+
   public function append($append = null): self
   {
     if ($append === null) {

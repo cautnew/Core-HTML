@@ -32,6 +32,11 @@ class CARD extends BS
     return $this->getTag();
   }
 
+  public function __toString()
+  {
+    return $this->getTag()->getHtml();
+  }
+
   public function setShowHeader(bool $indShowHeader = true): self
   {
     $this->showHeader = $indShowHeader;

@@ -47,6 +47,11 @@ class COL extends BS
     }
   }
 
+  public function __toString()
+  {
+    return $this->getTag()->getHtml();
+  }
+
   public function getTag(): DIV
   {
     return $this->renderTag();

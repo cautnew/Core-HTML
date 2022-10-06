@@ -11,6 +11,11 @@ class LABEL extends BS
     $this->finalElement = new DIV('row');
   }
 
+  public function __toString()
+  {
+    return $this->getTag()->getHtml();
+  }
+
   public function getTag()
   {
     $this->finalElement->clearClassList();

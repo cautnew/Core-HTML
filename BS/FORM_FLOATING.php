@@ -37,6 +37,11 @@ class FORM_FLOATING extends BS
     return $this->getTag();
   }
 
+  public function __toString()
+  {
+    return $this->getTag()->getHtml();
+  }
+
   public function setInput(INPUT|INPUT_DATE|INPUT_TEXT|INPUT_EMAIL|INPUT_MONTH|SELECT $input): self
   {
     $this->input = $input;

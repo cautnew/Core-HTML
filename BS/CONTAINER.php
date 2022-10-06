@@ -14,6 +14,11 @@ class CONTAINER extends BS
     $this->append($append);
   }
 
+  public function __toString()
+  {
+    return $this->getTag()->getHtml();
+  }
+
   public function getTag()
   {
     $this->finalElement->clearClassList();
