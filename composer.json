@@ -1,0 +1,14 @@
+{
+    "name": "cautnew/html",
+    "description": "An easy way to create and manipulate tags HTML",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Felipe Martins",
+            "email": "felipedesmartins@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
