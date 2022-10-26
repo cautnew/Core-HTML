@@ -3,7 +3,6 @@
 namespace Core\HTML\BS;
 
 use Core\HTML\DIV;
-use Core\HTML\TAG;
 
 class CONTAINER extends BS
 {
