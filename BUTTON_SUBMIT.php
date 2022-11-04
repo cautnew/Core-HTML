@@ -6,7 +6,7 @@ use Core\HTML\TAG;
 
 class BUTTON_SUBMIT extends TAG
 {
-  public function __construct(string $class=null, string $id=null, $html=null, string $value=null, ... $attrList)
+  public function __construct(?string $class=null, ?string $id=null, ?string $html=null, ?string $value=null, ... $attrList)
   {
     $this->setTagName('button');
 
