@@ -1,15 +1,16 @@
 {
-    "name": "cautnew/html",
-    "version": "1.0",
-    "description": "An easy way to create and manipulate HTML tags",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Felipe Martins",
-            "email": "felipedesmartins@gmail.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {}
+  "name": "cautnew/html",
+  "version": "1.0",
+  "description": "An easy way to create and manipulate HTML tags",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Felipe Martins",
+      "email": "felipedesmartins@gmail.com",
+      "homepage": "http://www.cautnew.com.br",
+      "role": "Back-End Developer"
+    }
+  ],
+  "minimum-stability": "stable"
 }
