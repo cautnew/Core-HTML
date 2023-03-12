@@ -1,7 +1,7 @@
 {
     "name": "cautnew/HTML",
-    "version": "0.3.0",
-    "description": "An easy way to create and manipulate tags HTML",
+    "version": "0.3",
+    "description": "An easy way to create and manipulate HTML tags",
     "type": "library",
     "license": "MIT",
     "authors": [
