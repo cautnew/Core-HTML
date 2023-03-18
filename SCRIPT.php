@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\HTML;
+namespace Cautnew\HTML;
 
-use Core\HTML\TAG;
+use Cautnew\HTML\TAG;
 
 class SCRIPT extends TAG
 {
