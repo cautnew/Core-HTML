@@ -2,6 +2,8 @@
 
 namespace Cautnew\HTML;
 
+require_once __DIR__ . '/../helpers/helpers_strings.php';
+
 class TAG
 {
   protected array $classList = [];
