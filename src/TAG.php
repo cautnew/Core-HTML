@@ -66,18 +66,37 @@ class TAG
     return $this;
   }
 
-  public function setAttr(string $name, ?string $value): self
+  public function removeAttribute(string $name): self
   {
-    return $this->setAttribute($name, $value);
+    if (array_key_exists($name, $this->attr)) {
+      unset($this->attr[$name]);
+    }
+
+    return $this;
   }
 
-  public function hasAttr(string $name): bool
+  public function hasAttribute(string $name): bool
   {
     if (isset($this->attrBoolean[$name]) || isset($this->attr[$name])) {
       return true;
     }
 
     return false;
+  }
+
+  public function setAttr(string $name, string | null $value): self
+  {
+    return $this->setAttribute($name, $value);
+  }
+
+  public function removeAttr(string $name): self
+  {
+    return $this->removeAttribute($name);
+  }
+
+  public function hasAttr(string $name): bool
+  {
+    return $this->hasAttribute($name);
   }
 
   public function setSpecialAttribute(string $name, $value): self
