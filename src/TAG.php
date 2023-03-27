@@ -16,7 +16,8 @@ class TAG
     'type', 'method', 'action'
   ];
   protected array $permBooleanAttr = [
-    'checked', 'disabled', 'multiple', 'readonly', 'required', 'selected'
+    'checked', 'disabled', 'multiple', 'readonly', 'required',
+    'selected', 'autoplay', 'muted', 'playsinline'
   ];
 
   private array $attr = [];
