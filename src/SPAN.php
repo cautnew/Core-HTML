@@ -2,8 +2,6 @@
 
 namespace Cautnew\HTML;
 
-use Cautnew\HTML\TAG;
-
 class SPAN extends TAG
 {
   public function __construct(string $class=null, string $id=null, ?string $html = null, ... $attrList)

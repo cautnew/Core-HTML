@@ -2,8 +2,6 @@
 
 namespace Cautnew\HTML;
 
-use Cautnew\HTML\TAG;
-
 class BUTTON extends TAG
 {
   public function __construct(?string $class=null, ?string $id=null, ?string $html=null, ?string $value=null, ?string $type = 'button', ... $attrList)
