@@ -402,6 +402,11 @@ class TAG
     return $this;
   }
 
+  public function getInnerHTML(): string
+  {
+    return $this->prepareContentHtml();
+  }
+
   public function setHtml($html): self
   {
     return $this->innerHTML($html);
