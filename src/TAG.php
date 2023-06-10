@@ -34,6 +34,8 @@ class TAG
   private string $RAD_ATTR_DATA = 'data';
   private string $RAD_ATTR_ARIA = 'aria';
 
+  private const SPECIAL_ATTRIBUTE_LIST = ['append', 'appendList'];
+
   protected bool $indRendered = false;
 
   public function __toString(): string
@@ -111,9 +113,8 @@ class TAG
 
   public function setAttributeList(array $attributeList): self
   {
-    define('SPECIAL_ATTRIBUTE_LIST', ['append', 'appendList']);
     foreach ($attributeList as $attr => $value) {
-      if (in_array($attr, SPECIAL_ATTRIBUTE_LIST)) {
+      if (in_array($attr, self::SPECIAL_ATTRIBUTE_LIST)) {
         $this->setSpecialAttribute($attr, $value);
       } else {
         $this->setAttribute($attr, $value);
