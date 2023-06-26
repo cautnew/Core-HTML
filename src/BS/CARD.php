@@ -164,6 +164,10 @@ class CARD extends BS
 
   public function getBody(): DIV
   {
+    if (!isset($this->cardBody)) {
+      $this->setBody(new DIV());
+    }
+
     return $this->cardBody;
   }
 
