@@ -5,20 +5,14 @@ namespace Cautnew\HTML\BS;
 use Boot\Helper\Helper;
 use Cautnew\HTML\DIV;
 use Cautnew\HTML\INPUT;
-use Cautnew\HTML\INPUT_DATE;
-use Cautnew\HTML\INPUT_EMAIL;
-use Cautnew\HTML\INPUT_MONTH;
-use Cautnew\HTML\INPUT_PASSWORD;
-use Cautnew\HTML\INPUT_TEXT;
+use Cautnew\HTML\INPUT_RADIO;
 use Cautnew\HTML\LABEL;
-use Cautnew\HTML\SELECT;
-use Cautnew\HTML\TEXTAREA;
 
-class FORM_FLOATING extends BS
+class FORM_RADIO extends BS
 {
-  private DIV $formfloating;
+  private DIV $formcheck;
   private LABEL $label;
-  private INPUT|INPUT_TEXT|INPUT_PASSWORD|INPUT_EMAIL|INPUT_DATE|INPUT_MONTH|TEXTAREA|SELECT $input;
+  private INPUT | INPUT_RADIO $input;
 
   private string $id;
   private string $name;
@@ -41,26 +35,26 @@ class FORM_FLOATING extends BS
     return $this->getTag()->getHtml();
   }
 
-  public function setFormFloating(DIV $formfloating): DIV
+  public function setFormCheck(DIV $formcheck): DIV
   {
-    $this->formfloating = $formfloating;
+    $this->formcheck = $formcheck;
 
-    return $this->formfloating;
+    return $this->formcheck;
   }
 
-  public function getFormFloating(): DIV
+  public function getFormCheck(): DIV
   {
-    if (!isset($this->formfloating)) {
-      $this->setFormFloating(new DIV());
+    if (!isset($this->formcheck)) {
+      $this->setFormCheck(new DIV());
     }
 
-    return $this->formfloating;
+    return $this->formcheck;
   }
 
   public function setLabel(LABEL $label): self
   {
     $this->label = $label;
-    $this->label->clearClassList();
+    $this->label->addClass('form-label');
 
     return $this;
   }
@@ -74,7 +68,7 @@ class FORM_FLOATING extends BS
     return $this->label;
   }
 
-  public function setInput(INPUT|INPUT_TEXT|INPUT_PASSWORD|INPUT_EMAIL|INPUT_DATE|INPUT_MONTH|TEXTAREA|SELECT $input): self
+  public function setInput(INPUT|INPUT_RADIO $input): self
   {
     $this->input = $input;
     $this->input->addClass('form-control');
@@ -82,10 +76,10 @@ class FORM_FLOATING extends BS
     return $this;
   }
 
-  public function getInput(): INPUT|INPUT_TEXT|INPUT_PASSWORD|INPUT_EMAIL|INPUT_DATE|INPUT_MONTH|TEXTAREA|SELECT
+  public function getInput(): INPUT|INPUT_RADIO
   {
     if (!isset($this->input)) {
-      $this->setInput(new INPUT('text'));
+      $this->setInput(new INPUT_RADIO());
     }
 
     return $this->input;
@@ -146,17 +140,15 @@ class FORM_FLOATING extends BS
 
   private function renderTag(): DIV
   {
-    $this->getFormFloating()->clearAppendList();
-    $this->getFormFloating()->addClass('form-floating');
-    $this->getFormFloating()->appendList([$this->getInput(), $this->getLabel()]);
+    $this->getFormCheck()->clearAppendList();
+    $this->getFormCheck()->appendList([$this->getInput(), $this->getLabel()]);
 
     $this->getInput()->setId($this->getId());
     $this->getInput()->setName($this->getName());
-    $this->getInput()->addClass('form-control');
 
     $this->getLabel()->setFor($this->getId());
     $this->getLabel()->append($this->getTxtLabel());
 
-    return $this->getFormFloating();
+    return $this->getFormCheck();
   }
 }
