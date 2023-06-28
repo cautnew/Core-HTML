@@ -14,7 +14,7 @@ class FORM_CHECK_SWITCH extends FORM_CHECK
   public function setFormCheck(DIV $formcheck): DIV
   {
     $this->formcheck = $formcheck;
-    $this->formcheck->addClass('form-check form-check-switch');
+    $this->formcheck->addClass('form-check form-switch');
 
     return $this->formcheck;
   }

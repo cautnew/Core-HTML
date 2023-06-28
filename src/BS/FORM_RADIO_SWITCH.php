@@ -14,7 +14,7 @@ class FORM_RADIO_SWITCH extends FORM_RADIO
   public function setFormCheck(DIV $formradio): DIV
   {
     $this->formradio = $formradio;
-    $this->formradio->addClass('form-check form-check-switch');
+    $this->formradio->addClass('form-check form-switch');
 
     return $this->formradio;
   }
