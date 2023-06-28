@@ -10,13 +10,13 @@ use Cautnew\HTML\LABEL;
 
 class FORM_CHECK extends BS
 {
-  private DIV $formcheck;
-  private LABEL $label;
-  private INPUT | INPUT_CHECKBOX $input;
+  protected DIV $formcheck;
+  protected LABEL $label;
+  protected INPUT | INPUT_CHECKBOX $input;
 
-  private string $id;
-  private string $name;
-  private string $txtLabel;
+  protected string $id;
+  protected string $name;
+  protected string $txtLabel;
 
   public function __construct(string $id, string $name, string $txtLabel)
   {
@@ -148,7 +148,7 @@ class FORM_CHECK extends BS
     $this->getInput()->setName($this->getName());
 
     $this->getLabel()->setFor($this->getId());
-    $this->getLabel()->append($this->getTxtLabel());
+    $this->getLabel()->clearAppendList()->append($this->getTxtLabel());
 
     return $this->getFormCheck();
   }

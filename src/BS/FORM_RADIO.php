@@ -10,13 +10,13 @@ use Cautnew\HTML\LABEL;
 
 class FORM_RADIO extends BS
 {
-  private DIV $formcheck;
-  private LABEL $label;
-  private INPUT | INPUT_RADIO $input;
+  protected DIV $formradio;
+  protected LABEL $label;
+  protected INPUT | INPUT_RADIO $input;
 
-  private string $id;
-  private string $name;
-  private string $txtLabel;
+  protected string $id;
+  protected string $name;
+  protected string $txtLabel;
 
   public function __construct(string $id, string $name, string $txtLabel)
   {
@@ -35,20 +35,20 @@ class FORM_RADIO extends BS
     return $this->getTag()->getHtml();
   }
 
-  public function setFormCheck(DIV $formcheck): DIV
+  public function setFormRadio(DIV $formradio): DIV
   {
-    $this->formcheck = $formcheck;
+    $this->formradio = $formradio;
 
-    return $this->formcheck;
+    return $this->formradio;
   }
 
-  public function getFormCheck(): DIV
+  public function getFormRadio(): DIV
   {
-    if (!isset($this->formcheck)) {
-      $this->setFormCheck(new DIV());
+    if (!isset($this->formradio)) {
+      $this->setFormRadio(new DIV());
     }
 
-    return $this->formcheck;
+    return $this->formradio;
   }
 
   public function setLabel(LABEL $label): self
@@ -140,15 +140,15 @@ class FORM_RADIO extends BS
 
   private function renderTag(): DIV
   {
-    $this->getFormCheck()->clearAppendList();
-    $this->getFormCheck()->appendList([$this->getInput(), $this->getLabel()]);
+    $this->getFormRadio()->clearAppendList();
+    $this->getFormRadio()->appendList([$this->getInput(), $this->getLabel()]);
 
     $this->getInput()->setId($this->getId());
     $this->getInput()->setName($this->getName());
 
     $this->getLabel()->setFor($this->getId());
-    $this->getLabel()->append($this->getTxtLabel());
+    $this->getLabel()->clearAppendList()->append($this->getTxtLabel());
 
-    return $this->getFormCheck();
+    return $this->getFormRadio();
   }
 }
