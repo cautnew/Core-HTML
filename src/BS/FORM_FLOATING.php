@@ -155,7 +155,7 @@ class FORM_FLOATING extends BS
     $this->getInput()->addClass('form-control');
 
     $this->getLabel()->setFor($this->getId());
-    $this->getLabel()->append($this->getTxtLabel());
+    $this->getLabel()->clearAppendList()->append($this->getTxtLabel());
 
     return $this->getFormFloating();
   }
