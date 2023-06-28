@@ -38,6 +38,7 @@ class FORM_CHECK extends BS
   public function setFormCheck(DIV $formcheck): DIV
   {
     $this->formcheck = $formcheck;
+    $this->formcheck->addClass('form-check');
 
     return $this->formcheck;
   }
@@ -54,7 +55,7 @@ class FORM_CHECK extends BS
   public function setLabel(LABEL $label): self
   {
     $this->label = $label;
-    $this->label->addClass('form-label');
+    $this->label->addClass('form-check-label');
 
     return $this;
   }
@@ -71,7 +72,7 @@ class FORM_CHECK extends BS
   public function setInput(INPUT|INPUT_CHECKBOX $input): self
   {
     $this->input = $input;
-    $this->input->addClass('form-control');
+    $this->input->addClass('form-check-input');
 
     return $this;
   }
