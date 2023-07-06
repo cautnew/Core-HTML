@@ -199,7 +199,7 @@ class FORM_CONTROL extends BS
     $this->getInput()->setId($this->getId());
     $this->getInput()->setName($this->getName());
 
-    $this->getSpanFormText()->append($this->getTxtFormText());
+    $this->getSpanFormText()->clearAppendList()->append($this->getTxtFormText());
 
     return $this->getFormControl();
   }
