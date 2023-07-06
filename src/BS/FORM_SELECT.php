@@ -2,6 +2,12 @@
 
 namespace Cautnew\HTML\BS;
 
+use Boot\Helper\Helper;
+use Cautnew\HTML\DIV;
+use Cautnew\HTML\INPUT;
+use Cautnew\HTML\INPUT_RADIO;
+use Cautnew\HTML\LABEL;
+
 class FORM_SELECT extends SELECT
 {
   protected DIV $div;

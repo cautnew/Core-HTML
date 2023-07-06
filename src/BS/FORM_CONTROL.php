@@ -13,23 +13,29 @@ use Cautnew\HTML\INPUT_PASSWORD;
 use Cautnew\HTML\INPUT_TEXT;
 use Cautnew\HTML\LABEL;
 use Cautnew\HTML\SELECT;
+use Cautnew\HTML\SPAN;
 use Cautnew\HTML\TEXTAREA;
 
-class FORM_FLOATING extends BS
+class FORM_CHECK extends BS
 {
-  private DIV $formfloating;
-  private LABEL $label;
-  private INPUT|INPUT_TEXT|INPUT_PASSWORD|INPUT_EMAIL|INPUT_DATE|INPUT_MONTH|INPUT_NUMBER|TEXTAREA|SELECT $input;
+  protected DIV $formcontrol;
+  protected LABEL $label;
+  protected SPAN $formtext;
+  protected INPUT|INPUT_TEXT|INPUT_PASSWORD|INPUT_EMAIL|INPUT_DATE|INPUT_MONTH|INPUT_NUMBER|TEXTAREA|SELECT $input;
 
-  private string $id;
-  private string $name;
-  private string $txtLabel;
+  protected string $id;
+  protected string $name;
+  protected string $txtLabel;
+  protected string $txtFormText;
 
-  public function __construct(string $id, string $name, string $txtLabel)
+  protected string $defaultInputType = "text";
+
+  public function __construct(string $id, string $name, string $txtLabel, string $txtFormText)
   {
     $this->setId($id);
     $this->setName($name);
     $this->setTxtLabel($txtLabel);
+    $this->setTxtFormText($txtFormText);
   }
 
   public function __invoke(): DIV
@@ -42,26 +48,44 @@ class FORM_FLOATING extends BS
     return $this->getTag()->getHtml();
   }
 
-  public function setFormFloating(DIV $formfloating): DIV
+  public function setFormControl(DIV $formcontrol): DIV
   {
-    $this->formfloating = $formfloating;
+    $this->formcontrol = $formcontrol;
+    $this->formcontrol->addClass('form-control');
 
-    return $this->formfloating;
+    return $this->formcontrol;
   }
 
-  public function getFormFloating(): DIV
+  public function getFormControl(): DIV
   {
-    if (!isset($this->formfloating)) {
-      $this->setFormFloating(new DIV());
+    if (!isset($this->formcontrol)) {
+      $this->setFormControl(new DIV());
     }
 
-    return $this->formfloating;
+    return $this->formcontrol;
+  }
+
+  public function setSpanFormText(SPAN $formtext): self
+  {
+    $this->formtext = $formtext;
+    $this->formtext->addClass('form-text');
+
+    return $this;
+  }
+
+  public function getSpanFormText(): SPAN
+  {
+    if (!isset($this->formtext)) {
+      $this->setSpanFormText(new SPAN());
+    }
+
+    return $this->formtext;
   }
 
   public function setLabel(LABEL $label): self
   {
     $this->label = $label;
-    $this->label->clearClassList();
+    $this->label->addClass('form-label');
 
     return $this;
   }
@@ -86,10 +110,26 @@ class FORM_FLOATING extends BS
   public function getInput(): INPUT|INPUT_TEXT|INPUT_PASSWORD|INPUT_EMAIL|INPUT_DATE|INPUT_MONTH|INPUT_NUMBER|TEXTAREA|SELECT
   {
     if (!isset($this->input)) {
-      $this->setInput(new INPUT('text'));
+      $this->setInput(new INPUT($this->defaultInputType));
     }
 
     return $this->input;
+  }
+
+  public function setTxtFormText(string $txtFormText): self
+  {
+    $this->txtFormText = $txtFormText;
+
+    return $this;
+  }
+
+  public function getTxtFormText(): string
+  {
+    if (!isset($this->txtFormText)) {
+      $this->setTxtFormText('');
+    }
+
+    return $this->txtFormText;
   }
 
   public function setTxtLabel(string $txtLabel): self
@@ -147,17 +187,21 @@ class FORM_FLOATING extends BS
 
   private function renderTag(): DIV
   {
-    $this->getFormFloating()->clearAppendList();
-    $this->getFormFloating()->addClass('form-floating');
-    $this->getFormFloating()->appendList([$this->getInput(), $this->getLabel()]);
-
-    $this->getInput()->setId($this->getId());
-    $this->getInput()->setName($this->getName());
-    $this->getInput()->addClass('form-control');
+    $this->getFormCheck()->clearAppendList();
+    $this->getFormCheck()->appendList([
+      $this->getLabel(),
+      $this->getInput(),
+      $this->getSpanFormText()
+    ]);
 
     $this->getLabel()->setFor($this->getId());
     $this->getLabel()->clearAppendList()->append($this->getTxtLabel());
 
-    return $this->getFormFloating();
+    $this->getInput()->setId($this->getId());
+    $this->getInput()->setName($this->getName());
+
+    $this->getSpanFormText()->append($this->getTxtFormText());
+
+    return $this->getFormCheck();
   }
 }
