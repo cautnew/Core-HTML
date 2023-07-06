@@ -51,7 +51,6 @@ class FORM_CONTROL extends BS
   public function setFormControl(DIV $formcontrol): DIV
   {
     $this->formcontrol = $formcontrol;
-    $this->formcontrol->addClass('form-control');
 
     return $this->formcontrol;
   }
