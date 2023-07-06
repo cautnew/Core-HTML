@@ -16,7 +16,7 @@ use Cautnew\HTML\SELECT;
 use Cautnew\HTML\SPAN;
 use Cautnew\HTML\TEXTAREA;
 
-class FORM_CHECK extends BS
+class FORM_CONTROL extends BS
 {
   protected DIV $formcontrol;
   protected LABEL $label;
@@ -187,8 +187,8 @@ class FORM_CHECK extends BS
 
   private function renderTag(): DIV
   {
-    $this->getFormCheck()->clearAppendList();
-    $this->getFormCheck()->appendList([
+    $this->getFormControl()->clearAppendList();
+    $this->getFormControl()->appendList([
       $this->getLabel(),
       $this->getInput(),
       $this->getSpanFormText()
@@ -202,6 +202,6 @@ class FORM_CHECK extends BS
 
     $this->getSpanFormText()->append($this->getTxtFormText());
 
-    return $this->getFormCheck();
+    return $this->getFormControl();
   }
 }
