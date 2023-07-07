@@ -30,7 +30,7 @@ class FORM_CONTROL extends BS
 
   protected string $defaultInputType = "text";
 
-  public function __construct(string $id, string $name, string $txtLabel, string $txtFormText)
+  public function __construct(string $id, string $name, string $txtLabel, ?string $txtFormText = null)
   {
     $this->setId($id);
     $this->setName($name);

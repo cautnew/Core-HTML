@@ -24,7 +24,7 @@ class COMPONENT_SPINNER extends BS
   protected string $id;
   protected string $txtVisuallyHidden;
 
-  public function __construct(string $id, string $txtVisuallyHidden)
+  public function __construct(string $id, ?string $txtVisuallyHidden = null)
   {
     $this->setId($id);
     $this->setTxtVisuallyHidden($txtVisuallyHidden);
@@ -75,8 +75,12 @@ class COMPONENT_SPINNER extends BS
     return $this->visuallyhidden;
   }
 
-  public function setTxtVisuallyHidden(string $txtVisuallyHidden): self
+  public function setTxtVisuallyHidden(?string $txtVisuallyHidden = null): self
   {
+    if ($txtVisuallyHidden === null) {
+      $txtVisuallyHidden = 'Carregando...';
+    }
+
     $this->txtVisuallyHidden = $txtVisuallyHidden;
 
     return $this;
