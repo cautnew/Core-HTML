@@ -13,12 +13,15 @@ class COMPONENT_SPINNER extends BS
 
   protected string $id;
   protected string $txtVisuallyHidden;
+  protected string $aditionalClasses;
   protected bool $indSmall;
   protected string $spinnerFormat = 'border';
 
-  public function __construct(string $id, ?string $txtVisuallyHidden = null)
+  public function __construct(string $id, bool $indSmall = false, ?string $aditionalClasses = null, ?string $txtVisuallyHidden = null)
   {
     $this->setId($id);
+    $this->setIndSmall($indSmall);
+    $this->setAditionalClasses($aditionalClasses);
     $this->setTxtVisuallyHidden($txtVisuallyHidden);
   }
 
@@ -36,6 +39,7 @@ class COMPONENT_SPINNER extends BS
   {
     $this->spinner = $spinner;
     $this->spinner->addClass("spinner-{$this->getSpinnerFormat()}");
+    $this->spinner->addClass($this->getAditionalClasses());
     $this->spinner->setAttr('role', 'status');
 
     return $this->spinner;
@@ -48,6 +52,22 @@ class COMPONENT_SPINNER extends BS
     }
 
     return $this->spinner;
+  }
+
+  public function setAditionalClasses(?string $aditionalClasses): self
+  {
+    $this->aditionalClasses = $aditionalClasses;
+
+    return $this;
+  }
+
+  public function getAditionalClasses(): ?string
+  {
+    if (!isset($this->aditionalClasses)) {
+      $this->setAditionalClasses('');
+    }
+
+    return $this->aditionalClasses;
   }
 
   public function setSpanVisuallyHidden(SPAN $visuallyhidden): self
