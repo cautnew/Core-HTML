@@ -26,7 +26,7 @@ class FORM_CONTROL extends BS
   protected string $id;
   protected string $name;
   protected string $txtLabel;
-  protected string $txtFormText;
+  protected ?string $txtFormText;
 
   protected string $defaultInputType = "text";
 
@@ -115,17 +115,17 @@ class FORM_CONTROL extends BS
     return $this->input;
   }
 
-  public function setTxtFormText(string $txtFormText): self
+  public function setTxtFormText(?string $txtFormText = null): self
   {
     $this->txtFormText = $txtFormText;
 
     return $this;
   }
 
-  public function getTxtFormText(): string
+  public function getTxtFormText(): ?string
   {
     if (!isset($this->txtFormText)) {
-      $this->setTxtFormText('');
+      $this->setTxtFormText();
     }
 
     return $this->txtFormText;
@@ -189,8 +189,7 @@ class FORM_CONTROL extends BS
     $this->getFormControl()->clearAppendList();
     $this->getFormControl()->appendList([
       $this->getLabel(),
-      $this->getInput(),
-      $this->getSpanFormText()
+      $this->getInput()
     ]);
 
     $this->getLabel()->setFor($this->getId());
@@ -199,7 +198,10 @@ class FORM_CONTROL extends BS
     $this->getInput()->setId($this->getId());
     $this->getInput()->setName($this->getName());
 
-    $this->getSpanFormText()->clearAppendList()->append($this->getTxtFormText());
+    if (!empty($this->getTxtFormText())) {
+      $this->getFormControl()->append($this->getSpanFormText());
+      $this->getSpanFormText()->clearAppendList()->append($this->getTxtFormText());
+    }
 
     return $this->getFormControl();
   }
