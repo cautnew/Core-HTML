@@ -4,74 +4,195 @@ namespace Cautnew\HTML\BS;
 
 use Boot\Helper\Helper;
 use Cautnew\HTML\DIV;
-use Cautnew\HTML\INPUT;
-use Cautnew\HTML\INPUT_RADIO;
 use Cautnew\HTML\LABEL;
+use Cautnew\HTML\SELECT;
+use Cautnew\HTML\SPAN;
 
-class FORM_SELECT extends SELECT
+class FORM_SELECT extends BS
 {
-  protected DIV $div;
+  protected DIV $formselect;
   protected LABEL $label;
+  protected SPAN $formtext;
+  protected SELECT $select;
 
-  protected bool $indCovered = false;
-  protected bool $indAppendLabelRight = false;
+  protected string $id;
+  protected string $name;
+  protected string $txtLabel;
+  protected ?string $txtFormText;
 
-  public function __construct(string $id = null, string $name = null, string $label = null)
+  public function __construct(string $id, string $name, string $txtLabel, ?string $txtFormText = null)
   {
-    $this->setTagName('select');
-    $this->setElementName('form-select');
+    $this->setId($id);
+    $this->setName($name);
+    $this->setTxtLabel($txtLabel);
+    $this->setTxtFormText($txtFormText);
+  }
 
-    $this->setAttr('id', $id);
-    $this->setAttr('name', $name);
+  public function __invoke(): DIV
+  {
+    return $this->getTag();
+  }
 
-    $this->label = new LABEL($id, $label);
+  public function __toString()
+  {
+    return $this->getTag()->getHtml();
+  }
+
+  public function setFormSelect(DIV $formselect): DIV
+  {
+    $this->formselect = $formselect;
+
+    return $this->formselect;
+  }
+
+  public function getFormSelect(): DIV
+  {
+    if (!isset($this->formselect)) {
+      $this->setFormSelect(new DIV());
+    }
+
+    return $this->formselect;
+  }
+
+  public function setSpanFormText(SPAN $formtext): self
+  {
+    $this->formtext = $formtext;
+    $this->formtext->addClass('form-text');
+
+    return $this;
+  }
+
+  public function getSpanFormText(): SPAN
+  {
+    if (!isset($this->formtext)) {
+      $this->setSpanFormText(new SPAN());
+    }
+
+    return $this->formtext;
+  }
+
+  public function setLabel(LABEL $label): self
+  {
+    $this->label = $label;
+    $this->label->addClass('form-label');
+
+    return $this;
   }
 
   public function getLabel(): LABEL
   {
+    if (!isset($this->label)) {
+      $this->setLabel(new LABEL());
+    }
+
     return $this->label;
   }
 
-  public function setAppendLabelRight(bool $ind = true): self
+  public function setSelect(SELECT $select): self
   {
-    $this->indAppendLabelRight = $ind;
-    return $this;
-  }
-
-  public function getCol(): COL
-  {
-    return $this->col;
-  }
-
-  public function setCol(COL $col): self
-  {
-    $this->col = $col;
+    $this->select = $select;
+    $this->select->addClass('form-select');
 
     return $this;
   }
 
-  public function renderHtml(): self
+  public function getSelect(): SELECT
   {
-    $this->clearAppendAfterList();
-    $this->clearAppendAfterList();
-    $this->label->setAttr('for', $this->getAttr('id'));
-
-    if ($this->indAppendLabelAfter) {
-      $this->appendAfter($this->label);
-    } else {
-      $this->appendBefore($this->label);
+    if (!isset($this->select)) {
+      $this->setSelect(new SELECT());
     }
 
-    $html = $this->prepareAppendBefore();
-    $html .= $this->prepareStartHtml();
-    $html .= $this->prepareContentHtml();
-    $html .= $this->prepareEndHtml();
-    $html .= $this->prepareAppendAfter();
+    return $this->select;
+  }
 
-    $this->html = $html;
-
-    $this->indRendered = true;
+  public function setTxtFormText(?string $txtFormText = null): self
+  {
+    $this->txtFormText = $txtFormText;
 
     return $this;
+  }
+
+  public function getTxtFormText(): ?string
+  {
+    if (!isset($this->txtFormText)) {
+      $this->setTxtFormText();
+    }
+
+    return $this->txtFormText;
+  }
+
+  public function setTxtLabel(string $txtLabel): self
+  {
+    $this->txtLabel = $txtLabel;
+
+    return $this;
+  }
+
+  public function getTxtLabel(): string
+  {
+    if (!isset($this->txtLabel)) {
+      $this->setTxtLabel('');
+    }
+
+    return $this->txtLabel;
+  }
+
+  public function setId(string $id): self
+  {
+    $this->id = $id;
+
+    return $this;
+  }
+
+  public function getId(): string
+  {
+    if (!isset($this->id)) {
+      $this->setId(Helper::generateRandomId());
+    }
+
+    return $this->id;
+  }
+
+  public function setName(string $name): self
+  {
+    $this->name = $name;
+
+    return $this;
+  }
+
+  public function getName(): string
+  {
+    if (!isset($this->name)) {
+      $this->setName(Helper::generateRandomId());
+    }
+
+    return $this->name;
+  }
+
+  public function getTag(): DIV
+  {
+    return $this->renderTag();
+  }
+
+  private function renderTag(): DIV
+  {
+    $this->getFormSelect()->clearAppendList();
+    $this->getFormSelect()->appendList([
+      $this->getLabel(),
+      $this->getSelect()
+    ]);
+
+    $this->getLabel()->setFor($this->getId());
+    $this->getLabel()->clearAppendList()->append($this->getTxtLabel());
+
+    $this->getSelect()->setId($this->getId());
+    $this->getSelect()->setName($this->getName());
+
+    if (!empty($this->getTxtFormText())) {
+      $this->getFormSelect()->append($this->getSpanFormText());
+      $this->getSpanFormText()->clearAppendList()->append($this->getTxtFormText());
+    }
+
+    return $this->getFormSelect();
   }
 }
