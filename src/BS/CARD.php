@@ -11,6 +11,7 @@ class CARD extends BS
   private DIV $cardBody;
   private DIV $cardFooter;
 
+  private string $id;
   private bool $indShowHeader;
   private bool $indShowBody;
   private bool $indShowFooter;

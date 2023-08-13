@@ -56,6 +56,10 @@ class COMPONENT_SPINNER extends BS
 
   public function setAditionalClasses(?string $aditionalClasses): self
   {
+    if (empty($aditionalClasses)) {
+      $aditionalClasses = '';
+    }
+
     $this->aditionalClasses = $aditionalClasses;
 
     return $this;

@@ -55,25 +55,28 @@ class TAG
     $this->indRendered = false;
 
     if ($value === null) {
-      if (in_array($name, $this->permBooleanAttr)) {
-        unset($this->attrBoolean[$name]);
-      } else {
-        unset($this->attr[$name]);
-      }
+      return $this->removeAttribute($name);
+    }
+
+    if (in_array($name, $this->permBooleanAttr)) {
+      $this->attrBoolean[$name] = (bool) $value;
     } else {
-      if (in_array($name, $this->permBooleanAttr)) {
-        $this->attrBoolean[$name] = (bool) $value;
-      } else {
-        $this->attr[$name] = $value;
-      }
+      $this->attr[$name] = $value;
     }
 
     return $this;
   }
 
+  public function setAttr(string $name, string | null $value): self
+  {
+    return $this->setAttribute($name, $value);
+  }
+
   public function removeAttribute(string $name): self
   {
-    if (array_key_exists($name, $this->attr)) {
+    if (in_array($name, $this->permBooleanAttr)) {
+      unset($this->attrBoolean[$name]);
+    } else {
       unset($this->attr[$name]);
     }
 
@@ -87,11 +90,6 @@ class TAG
     }
 
     return false;
-  }
-
-  public function setAttr(string $name, string | null $value): self
-  {
-    return $this->setAttribute($name, $value);
   }
 
   public function removeAttr(string $name): self
@@ -323,7 +321,7 @@ class TAG
     return $this->appendList($elmts);
   }
 
-  public function appendBefore(TAG $elmt): self
+  public function appendBefore(TAG|string $elmt): self
   {
     $this->indRendered = false;
     $this->appendListBefore[] = $elmt;
@@ -340,7 +338,7 @@ class TAG
     return $this;
   }
 
-  public function appendAfter(TAG $elmt): self
+  public function appendAfter(TAG|string $elmt): self
   {
     $this->indRendered = false;
     $this->appendListAfter[] = $elmt;

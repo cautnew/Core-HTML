@@ -33,4 +33,9 @@ class IMG extends TAG
   {
     return $this->setAttribute('alt', $alt);
   }
+
+  public function setSrc(string $src = null): self
+  {
+    return $this->setAttribute('src', $src);
+  }
 }
