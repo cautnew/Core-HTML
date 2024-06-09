@@ -1,12 +1,12 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
 use Boot\Helper\Helper;
-use Cautnew\HTML\DIV;
-use Cautnew\HTML\INPUT;
-use Cautnew\HTML\INPUT_CHECKBOX;
-use Cautnew\HTML\LABEL;
+use HTML\DIV;
+use HTML\INPUT;
+use HTML\INPUT_CHECKBOX;
+use HTML\LABEL;
 
 class FORM_CHECK extends BS
 {

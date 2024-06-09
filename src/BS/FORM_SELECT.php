@@ -1,12 +1,13 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
 use Boot\Helper\Helper;
-use Cautnew\HTML\DIV;
-use Cautnew\HTML\LABEL;
-use Cautnew\HTML\SELECT;
-use Cautnew\HTML\SPAN;
+use HTML\DIV;
+use HTML\LABEL;
+use HTML\OPTION;
+use HTML\SELECT;
+use HTML\SPAN;
 
 class FORM_SELECT extends BS
 {
@@ -14,18 +15,20 @@ class FORM_SELECT extends BS
   protected LABEL $label;
   protected SPAN $formtext;
   protected SELECT $select;
+  protected array $optionsList = [];
 
   protected string $id;
   protected string $name;
   protected string $txtLabel;
   protected ?string $txtFormText;
 
-  public function __construct(string $id, string $name, string $txtLabel, ?string $txtFormText = null)
+  public function __construct(string $id, string $name, string $txtLabel, ?string $txtFormText = null, ?array $optionsList = [])
   {
     $this->setId($id);
     $this->setName($name);
     $this->setTxtLabel($txtLabel);
     $this->setTxtFormText($txtFormText);
+    $this->setOptionsList($optionsList);
   }
 
   public function __invoke(): DIV
@@ -169,6 +172,18 @@ class FORM_SELECT extends BS
     return $this->name;
   }
 
+  public function getOptionsList(): array
+  {
+    return $this->optionsList;
+  }
+
+  public function setOptionsList(array $optionsList): self
+  {
+    $this->optionsList = $optionsList;
+
+    return $this;
+  }
+
   public function getTag(): DIV
   {
     return $this->renderTag();
@@ -187,6 +202,11 @@ class FORM_SELECT extends BS
 
     $this->getSelect()->setId($this->getId());
     $this->getSelect()->setName($this->getName());
+
+    foreach ($this->getOptionsList() as $option) {
+      if ($option instanceof OPTION)
+        $this->getSelect()->append($option);
+    }
 
     if (!empty($this->getTxtFormText())) {
       $this->getFormSelect()->append($this->getSpanFormText());

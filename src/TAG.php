@@ -1,6 +1,6 @@
 <?php
 
-namespace Cautnew\HTML;
+namespace HTML;
 
 require_once __DIR__ . '/../helpers/helpers_strings.php';
 
@@ -29,14 +29,30 @@ class TAG
   private array $appendListBefore = [];
   private array $notPermAttrDef = ['class'];
 
+  /**
+   * Define the dependencies that must be loaded before the page loads.
+   * Usually added in the head of the document.
+   * @var array $dependenciesPreload
+   */
+  private array $dependenciesPreload = [];
+
+  /**
+   * Define the dependencies that must be loaded after the page loads.
+   * Usually added in the end of the body tag.
+   * @var array $dependenciesPostload
+   */
+  private array $dependenciesPostload = [];
+
   public ?string $html = null;
 
   private string $RAD_ATTR_DATA = 'data';
   private string $RAD_ATTR_ARIA = 'aria';
 
-  private const SPECIAL_ATTRIBUTE_LIST = ['append', 'appendList'];
+  private const SPECIAL_ATTRIBUTE_LIST = ['append', 'appendList', 'aria'];
 
   protected bool $indRendered = false;
+
+  private TAG $parent;
 
   public function __toString(): string
   {
@@ -104,6 +120,22 @@ class TAG
 
   public function setSpecialAttribute(string $name, $value): self
   {
+    if ($name == 'aria') {
+      foreach ($value as $aria => $val) {
+        $this->setAria($aria, $val);
+      }
+
+      return $this;
+    }
+
+    if ($name == 'data') {
+      foreach ($value as $data => $val) {
+        $this->setData($data, $val);
+      }
+
+      return $this;
+    }
+
     $this->$name($value);
 
     return $this;
@@ -144,6 +176,27 @@ class TAG
   protected function getAttrList(): ?array
   {
     return $this->attr;
+  }
+
+  private function generateId(): string
+  {
+    return uniqid("tag");
+  }
+
+  public function setParent(TAG $parent): self
+  {
+    $this->parent = $parent;
+
+    return $this;
+  }
+
+  public function getParent(): TAG
+  {
+    if (!isset($this->parent)) {
+      $this->setParent(new TAG());
+    }
+
+    return $this->parent;
   }
 
   public function setData(string $name, ?string $value): self
@@ -269,9 +322,24 @@ class TAG
     return $this;
   }
 
-  public function setId(null|string $id): self
+  public function setId(null|string $id = null): self
   {
+    if (empty($id)) {
+      $id = $this->generateId();
+    }
+
     return $this->setAttr('id', $id);
+  }
+
+  public function getId(): string
+  {
+    $id = $this->getAttr('id');
+    if (empty($id)) {
+      $id = $this->generateId();
+      $this->setId($id);
+    }
+
+    return $id;
   }
 
   public function setName(null|string $name): self
@@ -289,17 +357,48 @@ class TAG
     return $this->setAttr('title', $title);
   }
 
-  public function append(TAG|string $elmt): self
+  public function appendTag(TAG $tag): self
+  {
+    $this->indRendered = false;
+    $tag->setParent($this);
+    $this->appendList[] = $tag;
+
+    return $this;
+  }
+
+  public function appendTagBefore(TAG $tag): self
+  {
+    $this->indRendered = false;
+    $tag->setParent($this->getParent());
+    $this->appendListBefore[] = $tag;
+
+    return $this;
+  }
+
+  public function appendTagAfter(TAG $tag): self
+  {
+    $this->indRendered = false;
+    $tag->setParent($this->getParent());
+    $this->appendListAfter[] = $tag;
+
+    return $this;
+  }
+
+  public function append(TAG|string|array $elmt): self
   {
     $this->indRendered = false;
 
-    if (gettype($elmt) === 'string') {
-      $this->appendList[] = new INNERHTML($elmt);
-    } else {
-      $this->appendList[] = $elmt;
+    if (is_array($elmt)) {
+      foreach ($elmt as $el) {
+        $this->append($el);
+      }
+      return $this;
+    } else if (gettype($elmt) === 'string') {
+      $this->appendTag(new INNERHTML($elmt));
+      return $this;
     }
-
-    return $this;
+    
+    return $this->appendTag($elmt);
   }
 
   public function add(TAG|string $elmt): self
@@ -309,24 +408,29 @@ class TAG
 
   public function appendList(array $elmts): self
   {
-    foreach ($elmts as $elmt) {
-      $this->append($elmt);
-    }
-
-    return $this;
+    return $this->append($elmts);
   }
 
   public function addList(array $elmts): self
   {
-    return $this->appendList($elmts);
+    return $this->append($elmts);
   }
 
-  public function appendBefore(TAG|string $elmt): self
+  public function appendBefore(TAG|string|array $elmt): self
   {
     $this->indRendered = false;
-    $this->appendListBefore[] = $elmt;
 
-    return $this;
+    if (is_array($elmt)) {
+      foreach ($elmt as $el) {
+        $this->appendBefore($el);
+      }
+      return $this;
+    } else if (gettype($elmt) === 'string') {
+      $this->appendTagBefore(new INNERHTML($elmt));
+      return $this;
+    }
+    
+    return $this->appendTagBefore($elmt);
   }
 
   public function appendListBefore(array $elmts): self
@@ -338,18 +442,47 @@ class TAG
     return $this;
   }
 
-  public function appendAfter(TAG|string $elmt): self
+  public function appendAfter(TAG|string|array $elmt): self
   {
     $this->indRendered = false;
-    $this->appendListAfter[] = $elmt;
 
-    return $this;
+    if (is_array($elmt)) {
+      foreach ($elmt as $el) {
+        $this->appendAfter($el);
+      }
+      return $this;
+    } else if (gettype($elmt) === 'string') {
+      $this->appendTagAfter(new INNERHTML($elmt));
+      return $this;
+    }
+    
+    return $this->appendTagAfter($elmt);
   }
 
   public function appendListAfter(array $elmts): self
   {
     foreach ($elmts as $elmt) {
       $this->appendAfter($elmt);
+    }
+
+    return $this;
+  }
+
+  public function addDependenciePreload(TAG|array $elmt): self
+  {
+    if (is_array($elmt)) {
+      return $this->addDependenciesPreload($elmt);
+    }
+
+    $this->dependenciesPreload[] = $elmt;
+
+    return $this;
+  }
+
+  public function addDependenciesPreload(array $elmts): self
+  {
+    foreach ($elmts as $elmt) {
+      $this->addDependenciePreload($elmt);
     }
 
     return $this;

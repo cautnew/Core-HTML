@@ -2,34 +2,36 @@
 
 // Methods for BS 5 and above
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
-use Cautnew\HTML\TAG;
+use HTML\TAG;
 
 class BS
 {
   private array $bsClassList;
   private array $bsAriaList;
 
-  private array $bsGridBreakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
-  private array $bsSpacingClass = ['m', 'me', 'ms', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pe', 'ps', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
-  private array $bsContextList = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
+  protected array $bsGridBreakpoints = ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'];
+  protected array $bsShadowSizes = ['sm', 'md', 'lg'];
+  protected array $bsSpacingClass = ['m', 'me', 'ms', 'mt', 'mb', 'ml', 'mr', 'mx', 'my', 'p', 'pe', 'ps', 'pt', 'pb', 'pl', 'pr', 'px', 'py'];
+  protected array $bsContextList = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
+  protected array $bsBackgroundColors = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'white', 'transparent'];
 
   private string $bsElementName;
   private string $bsContext;
 
   private string $RAD_ATTR_ARIA = 'aria';
 
-  protected $finalElement;
+  protected TAG $finalElement;
 
   public function __invoke()
   {
-    return $this->getFinalElement();
+    return $this->getTag();
   }
 
   public function __toString()
   {
-    return $this->getFinalElement()->getHtml();
+    return $this->getTag()->getHtml();
   }
 
   public function append($append = null): self
@@ -47,13 +49,49 @@ class BS
     return $this;
   }
 
-  public function getFinalElement()
+  /**
+   * Renders the final element of the class.
+   * @return self
+   */
+  public function render(): self
   {
-    return $this->getTag();
+    return $this;
   }
 
-  public function getTag()
+  /**
+   * Renders and returns the final element of the class.
+   * @return TAG
+   */
+  public function getTag(): TAG
+  {
+    return $this->render()->finalElement;
+  }
+
+  /**
+   * Returns the final element of the class without rendenring it's object.
+   * If you want to get the element rendered use the getTag() method.
+   * @return TAG
+   */
+  public function getFinalElement(): TAG
   {
     return $this->finalElement;
+  }
+
+  public function setId(string $id): self
+  {
+    if (empty($id)) {
+      return $this;
+    }
+
+    $this->getTag()->setId($id);
+
+    return $this;
+  }
+
+  public function addClass(string $class): self
+  {
+    $this->getTag()->addClass($class);
+
+    return $this;
   }
 }

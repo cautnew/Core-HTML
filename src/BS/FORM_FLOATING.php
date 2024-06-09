@@ -1,19 +1,19 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
 use Boot\Helper\Helper;
-use Cautnew\HTML\DIV;
-use Cautnew\HTML\INPUT;
-use Cautnew\HTML\INPUT_DATE;
-use Cautnew\HTML\INPUT_EMAIL;
-use Cautnew\HTML\INPUT_MONTH;
-use Cautnew\HTML\INPUT_NUMBER;
-use Cautnew\HTML\INPUT_PASSWORD;
-use Cautnew\HTML\INPUT_TEXT;
-use Cautnew\HTML\LABEL;
-use Cautnew\HTML\SELECT;
-use Cautnew\HTML\TEXTAREA;
+use HTML\DIV;
+use HTML\INPUT;
+use HTML\INPUT_DATE;
+use HTML\INPUT_EMAIL;
+use HTML\INPUT_MONTH;
+use HTML\INPUT_NUMBER;
+use HTML\INPUT_PASSWORD;
+use HTML\INPUT_TEXT;
+use HTML\LABEL;
+use HTML\SELECT;
+use HTML\TEXTAREA;
 
 class FORM_FLOATING extends BS
 {

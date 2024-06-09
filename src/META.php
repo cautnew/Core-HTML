@@ -1,8 +1,8 @@
 <?php
 
-namespace Cautnew\HTML;
+namespace HTML;
 
-use Cautnew\HTML\TAG;
+use HTML\TAG;
 
 class META extends TAG
 {

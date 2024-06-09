@@ -1,8 +1,8 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
-use Cautnew\HTML\DIV;
+use HTML\DIV;
 
 class CONTAINER extends BS
 {

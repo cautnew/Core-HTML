@@ -1,49 +1,39 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
-use Cautnew\HTML\DIV;
+use HTML\TAG;
+use HTML\DIV;
 
 class COL extends BS
 {
-  private int $colSize;
-  private int $colXsSize;
-  private int $colSmSize;
-  private int $colMdSize;
-  private int $colLgSize;
-  private int $colXlSize;
-  private int $colXxlSize;
+  private int $colSize = 0;
+  private int $colXsSize = 0;
+  private int $colSmSize = 0;
+  private int $colMdSize = 0;
+  private int $colLgSize = 0;
+  private int $colXlSize = 0;
+  private int $colXxlSize = 0;
+  private string $className;
 
-  public function __construct(int $size=null, int $sizeXs=null, int $sizeSm=null, int $sizeMd=null, int $sizeLg=null, int $sizeXl=null, int $sizeXxl=null)
+  public function __construct(string $className='', int $size=0, int $onXs=0, int $onSm=0, int $onMd=0, int $onLg=0, int $onXl=0, int $onXxl=0, TAG|array|null $append = null)
   {
     $this->finalElement = new DIV();
 
-    if ($size !== null) {
-      $this->colSize = $size;
+    $this->setSize($size);
+    $this->setSizeXs($onXs);
+    $this->setSizeSm($onSm);
+    $this->setSizeMd($onMd);
+    $this->setSizeLg($onLg);
+    $this->setSizeXl($onXl);
+    $this->setSizeXxl($onXxl);
+
+    if ($append !== null) {
+      $this->append($append);
     }
 
-    if ($sizeXs !== null) {
-      $this->colXsSize = $sizeXs;
-    }
-
-    if ($sizeSm !== null) {
-      $this->colSmSize = $sizeSm;
-    }
-
-    if ($sizeMd !== null) {
-      $this->colMdSize = $sizeMd;
-    }
-
-    if ($sizeLg !== null) {
-      $this->colLgSize = $sizeLg;
-    }
-
-    if ($sizeXl !== null) {
-      $this->colXlSize = $sizeXl;
-    }
-
-    if ($sizeXxl !== null) {
-      $this->colXxlSize = $sizeXxl;
+    if (!empty($className)) {
+      $this->className = $className;
     }
   }
 
@@ -57,7 +47,7 @@ class COL extends BS
     return $this->renderTag();
   }
 
-  private function addClassSize(string $sizeName, int $size)
+  private function addClassSize(string $sizeName, int $size): void
   {
     $classRad = "col";
 
@@ -75,38 +65,42 @@ class COL extends BS
   private function renderTag(): DIV
   {
     $this->finalElement->clearClassList();
-
+    
     if (!$this->isSizeSet()) {
       $this->finalElement->addClass('col');
       return $this->finalElement;
     }
 
-    if (isset($this->colSize)) {
+    if ($this->colSize > 0) {
       $this->addClassSize('', $this->colSize);
     }
 
-    if (isset($this->colXsSize)) {
+    if ($this->colXsSize > 0) {
       $this->addClassSize('xs', $this->colXsSize);
     }
 
-    if (isset($this->colSmSize)) {
+    if ($this->colSmSize > 0) {
       $this->addClassSize('sm', $this->colSmSize);
     }
 
-    if (isset($this->colMdSize)) {
+    if ($this->colMdSize > 0) {
       $this->addClassSize('md', $this->colMdSize);
     }
 
-    if (isset($this->colLgSize)) {
+    if ($this->colLgSize > 0) {
       $this->addClassSize('lg', $this->colLgSize);
     }
 
-    if (isset($this->colXlSize)) {
+    if ($this->colXlSize > 0) {
       $this->addClassSize('xl', $this->colXlSize);
     }
 
-    if (isset($this->colXxlSize)) {
+    if ($this->colXxlSize > 0) {
       $this->addClassSize('xxl', $this->colXxlSize);
+    }
+
+    if (isset($this->className)) {
+      $this->finalElement->addClass($this->className);
     }
 
     return $this->finalElement;
@@ -141,10 +135,20 @@ class COL extends BS
     return $this;
   }
 
+  public function onXs(int $size): self
+  {
+    return $this->setSizeXs($size);
+  }
+
   public function setSizeSm(int $size): self
   {
     $this->setAnySize($this->colSmSize, $size);
     return $this;
+  }
+
+  public function onSm(int $size): self
+  {
+    return $this->setSizeSm($size);
   }
 
   public function setSizeMd(int $size): self
@@ -153,10 +157,20 @@ class COL extends BS
     return $this;
   }
 
+  public function onMd(int $size): self
+  {
+    return $this->setSizeMd($size);
+  }
+
   public function setSizeLg(int $size): self
   {
     $this->setAnySize($this->colLgSize, $size);
     return $this;
+  }
+
+  public function onLg(int $size): self
+  {
+    return $this->setSizeLg($size);
   }
 
   public function setSizeXl(int $size): self
@@ -165,9 +179,19 @@ class COL extends BS
     return $this;
   }
 
+  public function onXl(int $size): self
+  {
+    return $this->setSizeXl($size);
+  }
+
   public function setSizeXxl(int $size): self
   {
     $this->setAnySize($this->colXxlSize, $size);
     return $this;
+  }
+
+  public function onXxl(int $size): self
+  {
+    return $this->setSizeXxl($size);
   }
 }

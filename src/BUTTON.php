@@ -1,6 +1,6 @@
 <?php
 
-namespace Cautnew\HTML;
+namespace HTML;
 
 class BUTTON extends TAG
 {

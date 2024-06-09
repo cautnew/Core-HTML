@@ -1,6 +1,6 @@
 <?php
 
-namespace Cautnew\HTML;
+namespace HTML;
 
 class STRONG extends TAG
 {

@@ -1,20 +1,31 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
-use Cautnew\HTML\DIV;
+use HTML\DIV;
+use HTML\BS\CARD_BODY;
+use HTML\BS\CARD_HEADER;
+use HTML\BS\CARD_FOOTER;
 
 class CARD extends BS
 {
   private DIV $card;
-  private DIV $cardHeader;
-  private DIV $cardBody;
-  private DIV $cardFooter;
+  private CARD_HEADER $cardHeader;
+  private CARD_BODY $cardBody;
+  private CARD_FOOTER $cardFooter;
 
   private string $id;
   private bool $indShowHeader;
   private bool $indShowBody;
   private bool $indShowFooter;
+
+  public function __construct(string $id, string $backgroundColor = 'light', string $shadowSize = 'sm', string $marginDirection = 'b', int $marginSize = 2)
+  {
+    $this->setId($id);
+    $this->setMargin($marginDirection, $marginSize);
+    $this->setBackgroundColor($backgroundColor);
+    $this->setShadowSize($shadowSize);
+  }
 
   public function __invoke(): DIV
   {
@@ -33,6 +44,13 @@ class CARD extends BS
     return $this;
   }
 
+  public function setMargin(string $marginDirection = 'b', int $marginSize = 2): self
+  {
+    $this->getTag()->addClass("m{$marginDirection}-{$marginSize}");
+
+    return $this;
+  }
+
   public function getIndShowHeader(): bool
   {
     if (!isset($this->indShowHeader)) {
@@ -40,6 +58,28 @@ class CARD extends BS
     }
 
     return $this->indShowHeader;
+  }
+
+  public function setBackgroundColor(string $background): self
+  {
+    if (!in_array($background, $this->bsBackgroundColors)) {
+      return $this;
+    }
+
+    $this->getTag()->addClass("bg-{$background}");
+
+    return $this;
+  }
+
+  public function setShadowSize(string $size = "sm"): self
+  {
+    if (!in_array($size, $this->bsShadowSizes)) {
+      return $this;
+    }
+
+    $this->getTag()->addClass("shadow-{$size}");
+
+    return $this;
   }
 
   public function isShowHeader(): bool
@@ -131,22 +171,25 @@ class CARD extends BS
     return $this->card;
   }
 
-  public function setHeader(DIV $cardHeader): self
+  public function setHeader(CARD_HEADER $cardHeader): self
   {
     $this->cardHeader = $cardHeader;
-    $this->cardHeader->clearClassList();
-    $this->cardHeader->addClass('card-header');
 
     return $this;
   }
 
-  public function getHeader(): DIV
+  public function getHeader(): CARD_HEADER
   {
     if (!isset($this->cardHeader)) {
-      $this->setHeader(new DIV());
+      $this->setHeader(new CARD_HEADER());
     }
 
     return $this->cardHeader;
+  }
+
+  public function header(): CARD_HEADER
+  {
+    return $this->getHeader();
   }
 
   public function isSetHeader(): bool
@@ -154,22 +197,25 @@ class CARD extends BS
     return isset($this->cardHeader);
   }
 
-  public function setBody(DIV $cardBody): self
+  public function setBody(CARD_BODY $cardBody): self
   {
     $this->cardBody = $cardBody;
-    $this->cardBody->clearClassList();
-    $this->cardBody->addClass('card-body');
 
     return $this;
   }
 
-  public function getBody(): DIV
+  public function getBody(): CARD_BODY
   {
     if (!isset($this->cardBody)) {
-      $this->setBody(new DIV());
+      $this->setBody(new CARD_BODY());
     }
 
     return $this->cardBody;
+  }
+
+  public function body(): CARD_BODY
+  {
+    return $this->getBody();
   }
 
   public function isSetBody(): bool
@@ -177,22 +223,25 @@ class CARD extends BS
     return isset($this->cardBody);
   }
 
-  public function setFooter(DIV $cardFooter): self
+  public function setFooter(CARD_FOOTER $cardFooter): self
   {
     $this->cardFooter = $cardFooter;
-    $this->cardFooter->clearClassList();
-    $this->cardFooter->addClass('card-footer');
 
     return $this;
   }
 
-  public function getFooter(): DIV
+  public function getFooter(): CARD_FOOTER
   {
     if (!isset($this->cardFooter)) {
-      $this->setFooter(new DIV());
+      $this->setFooter(new CARD_FOOTER());
     }
 
     return $this->cardFooter;
+  }
+
+  public function footer(): CARD_FOOTER
+  {
+    return $this->getFooter();
   }
 
   public function isSetFooter(): bool

@@ -1,15 +1,15 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
-use Cautnew\HTML\DIV;
+use HTML\TAG;
+use HTML\DIV;
 
 class ROW extends BS
 {
-  public function __construct($append = null)
+  public function __construct(TAG|array $append = null)
   {
-    $this->finalElement = new DIV('row');
-
+    $this->finalElement = new DIV();
     $this->append($append);
   }
 
@@ -18,7 +18,7 @@ class ROW extends BS
     return $this->getTag()->getHtml();
   }
 
-  public function getTag()
+  public function getTag(): DIV
   {
     $this->finalElement->clearClassList();
     $this->finalElement->addClass("row");

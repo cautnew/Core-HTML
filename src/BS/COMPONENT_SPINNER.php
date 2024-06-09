@@ -1,10 +1,10 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
 use Boot\Helper\Helper;
-use Cautnew\HTML\DIV;
-use Cautnew\HTML\SPAN;
+use HTML\DIV;
+use HTML\SPAN;
 
 class COMPONENT_SPINNER extends BS
 {

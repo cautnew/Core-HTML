@@ -1,6 +1,6 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
 class SELECT extends BS
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Cautnew\HTML;
+namespace HTML;
 
-use Cautnew\HTML\TAG;
+use HTML\TAG;
 
 class FOOTER extends TAG
 {
-  public function __construct(string $class=null, string $id=null, ... $attrList)
+  public function __construct(string $class=null, string $id=null, ?string $html = null, ... $attrList)
   {
     $this->setTagName('footer');
 
@@ -21,5 +21,7 @@ class FOOTER extends TAG
     if ($attrList !== null) {
       $this->setAttributeList($attrList);
     }
+
+    $this->setHtml($html);
   }
 }

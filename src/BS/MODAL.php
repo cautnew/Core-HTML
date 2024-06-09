@@ -1,8 +1,8 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
-use Cautnew\HTML\DIV;
+use HTML\DIV;
 
 class MODAL extends BS
 {
@@ -90,7 +90,7 @@ class MODAL extends BS
     }
 
     if ($this->showFooter) {
-      $this->momodalContentdal->append($this->modalFooter);
+      $this->modalContent->append($this->modalFooter);
     }
 
     $this->modal->tabindex = '-1';

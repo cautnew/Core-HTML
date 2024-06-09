@@ -1,12 +1,12 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
 use Boot\Helper\Helper;
-use Cautnew\HTML\DIV;
-use Cautnew\HTML\INPUT;
-use Cautnew\HTML\INPUT_RADIO;
-use Cautnew\HTML\LABEL;
+use HTML\DIV;
+use HTML\INPUT;
+use HTML\INPUT_RADIO;
+use HTML\LABEL;
 
 class FORM_RADIO extends BS
 {

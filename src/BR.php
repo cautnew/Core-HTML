@@ -1,6 +1,6 @@
 <?php
 
-namespace Cautnew\HTML;
+namespace HTML;
 
 class BR extends TAG
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
 class COMPONENT_SPINNER_GROW extends COMPONENT_SPINNER
 {

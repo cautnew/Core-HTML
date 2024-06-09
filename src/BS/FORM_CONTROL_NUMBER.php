@@ -1,6 +1,6 @@
 <?php
 
-namespace Cautnew\HTML\BS;
+namespace HTML\BS;
 
 class FORM_CONTROL_NUMBER extends FORM_CONTROL
 {
